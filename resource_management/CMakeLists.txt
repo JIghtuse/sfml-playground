@@ -7,7 +7,6 @@ find_package(SFML 2 REQUIRED system window graphics)
 
 add_executable(run
 src/game.cpp
-src/main.cpp
-src/texture_holder.cpp)
+src/main.cpp)
 
 target_link_libraries(run ${SFML_LIBRARIES})

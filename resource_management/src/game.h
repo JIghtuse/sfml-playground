@@ -1,6 +1,9 @@
 #pragma once
 
-#include "texture_holder.h"
+#include "fonts.h"
+#include "textures.h"
+#include "resource_holder.h"
+#include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics.hpp>
 
 class Game {
@@ -9,6 +12,8 @@ public:
     void run();
 
 private:
+    using TextureHolder = ResourceHolder<sf::Texture, Textures>;
+    using FontHolder = ResourceHolder<sf::Font, Fonts>;
 
     void processEvents();
     void update(sf::Time);
@@ -19,9 +24,9 @@ private:
 
     sf::RenderWindow _window;
     TextureHolder textures{};
+    FontHolder fonts{};
     sf::Sprite _playerSprite{};
     sf::Vector2f _playerMoveDirection{};
-    sf::Font _messageFont{};
     sf::Text _fpsMessage{};
     sf::Time _statisticsUpdateTime{};
     std::size_t _statisticsNumberOfFrames{};

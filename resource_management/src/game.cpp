@@ -3,15 +3,17 @@
 
 namespace {
 
-const auto kAppName = "Sprites";
+const auto kAppName = "Resource Management";
 const auto kWindowWidth = 1280;
-const auto kWindowHeight = 960;
+const auto kWindowHeight = 770;
 const auto kPlayerSpeed = 200;
 const auto kTimePerFrame = sf::seconds(1.0f / 60.0f);
+// https://openclipart.org/detail/220295/airplane-pictogram-fixed
 const auto kPlayerAirplaneTexturePath = "../images/airplane.png";
-const auto kMissileTexturePath = "../images/missile.png";
+// https://pixabay.com/en/slovenia-mountains-sky-clouds-fog-1901151/
 const auto kLandscapeTexturePath = "../images/landscape.png";
-const auto kMessageFontPath = "Inconsolata.ttf";
+const auto kInconsolataFontPath = "Inconsolata.ttf";
+const auto kLiberationFontPath = "LiberationSans-Regular.ttf";
 
 } // namespace
 
@@ -22,18 +24,15 @@ Game::Game()
 
     textures.load(Textures::Airplane, kPlayerAirplaneTexturePath);
     textures.load(Textures::Landscape, kLandscapeTexturePath);
-    textures.load(Textures::Missile, kMissileTexturePath);
 
-    if (!_messageFont.loadFromFile(kMessageFontPath)) {
-        throw std::runtime_error("Cannot load message font file "s + kMessageFontPath);
-    }
+    fonts.load(Fonts::Inconsolata, kInconsolataFontPath);
+    fonts.load(Fonts::LiberationSans, kLiberationFontPath);
 
     _window.setVerticalSyncEnabled(true);
     _playerSprite.setTexture(textures.get(Textures::Airplane));
-    _playerSprite.setScale(2, 2);
     _playerSprite.setPosition(kWindowWidth / 2, kWindowHeight / 2);
 
-    _fpsMessage.setFont(_messageFont);
+    _fpsMessage.setFont(fonts.get(Fonts::Inconsolata));
     _fpsMessage.setCharacterSize(50);
     _fpsMessage.setColor(sf::Color::Black);
 
@@ -124,6 +123,11 @@ void Game::draw()
 {
     _window.clear(sf::Color::White);
     _window.draw(_fpsMessage);
+
+    auto landscape = sf::Sprite{};
+    landscape.setTexture(textures.get(Textures::Landscape));
+
+    _window.draw(landscape);
     _window.draw(_playerSprite);
     _window.display();
 }
